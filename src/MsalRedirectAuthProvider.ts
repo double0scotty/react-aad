@@ -24,6 +24,7 @@
 //
 
 import { AuthenticationParameters, AuthError, AuthResponse, Configuration } from 'msal';
+import { Logger } from './logger';
 import { MsalAuthProvider } from './MsalAuthProvider';
 
 export class MsalRedirectAuthProvider extends MsalAuthProvider {
@@ -33,6 +34,12 @@ export class MsalRedirectAuthProvider extends MsalAuthProvider {
     // tslint:disable-next-line: no-empty
     const authRedirectCallback = (error: AuthError, response: AuthResponse) => {
       // Empty callback by default
+      if (error) {
+        Logger.error(`Login popup failed; ${error}`);
+        return;
+      }
+
+      this.acquireTokens(response.idToken.rawIdToken);
     };
 
     this.UserAgentApplication.handleRedirectCallback(authRedirectCallback);
