@@ -55,9 +55,8 @@ var MsalRedirectAuthProvider = /** @class */ (function(_super) {
     var _this = _super.call(this, authProviderConfig, authParameters) || this;
     // tslint:disable-next-line: no-empty
     var authRedirectCallback = function(error, response) {
-      // Empty callback by default
       if (error) {
-        logger_1.Logger.error('Login popup failed; ' + error);
+        logger_1.Logger.error('Login redirect failed; ' + error);
         return;
       }
       _this.acquireTokens(response.idToken.rawIdToken);
