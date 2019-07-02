@@ -32,10 +32,9 @@ export class MsalRedirectAuthProvider extends MsalAuthProvider {
     super(authProviderConfig, authParameters);
 
     // tslint:disable-next-line: no-empty
-    const authRedirectCallback = (error: AuthError, response: AuthResponse) => {
-      // Empty callback by default
+    const authRedirectCallback = (error: AuthError, response: AuthResponse) => {      
       if (error) {
-        Logger.error(`Login popup failed; ${error}`);
+        Logger.error(`Login redirect failed; ${error}`);
         return;
       }
 
