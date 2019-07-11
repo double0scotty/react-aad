@@ -26,8 +26,9 @@
 import * as React from 'react';
 import { Store } from 'redux';
 
-import { loginSuccessful, logoutSuccessful } from './actions';
+import { loginSuccessful, logoutSuccessful, providerCreated } from './actions';
 import { AccountInfoCallback, AuthenticationState, IAccountInfo, IAuthProvider, IAuthProviderFactory } from './Interfaces';
+import { MsalAuthProvider } from './MsalAuthProvider';
 
 
 
@@ -57,6 +58,8 @@ class AzureAD extends React.Component<IProps, IState> {
 
     this.authProvider = this.props.provider.getAuthProvider();
     this.authProvider.onAuthenticationStateChanged = this.updateAuthenticationState;
+
+    this.dispatchProviderToProvidedReduxStore(this.authProvider);
 
     this.state = { authenticationState: this.authProvider.authenticationState }
 
@@ -124,6 +127,12 @@ class AzureAD extends React.Component<IProps, IState> {
   private dispatchToProvidedReduxStore(data: IAccountInfo) {
     if (this.props.reduxStore) {
       this.props.reduxStore.dispatch(loginSuccessful(data))
+    }
+  }
+
+  private dispatchProviderToProvidedReduxStore(data : IAuthProvider) {
+    if (this.props.reduxStore) {
+      this.props.reduxStore.dispatch(providerCreated(data));
     }
   }
 }

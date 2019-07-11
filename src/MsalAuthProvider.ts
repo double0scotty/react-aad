@@ -70,6 +70,34 @@ export abstract class MsalAuthProvider implements IAuthProvider {
     return this.accountInfo;
   }
 
+  public getToken(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+        
+      this.UserAgentApplication.acquireTokenSilent(this.authParameters).then(
+        (response: AuthResponse) => {        
+          this.saveAccountInfo(response.accessToken, response.idToken.rawIdToken, this.UserAgentApplication.getAccount());
+          resolve(response.accessToken);
+        },
+        (tokenSilentError: AuthError) => {
+          this.setAuthenticationState(AuthenticationState.Unauthenticated);
+          Logger.error(`token silent error; ${tokenSilentError}`);
+          this.UserAgentApplication.acquireTokenPopup(this.authParameters).then(
+            (response: AuthResponse) => {
+              this.saveAccountInfo(response.accessToken, response.idToken.rawIdToken, this.UserAgentApplication.getAccount());
+              resolve(response.accessToken);
+            },
+            (tokenPopupError: AuthError) => {
+              this.setAuthenticationState(AuthenticationState.Unauthenticated);
+              Logger.error(`token popup error; ${tokenPopupError}`);
+              
+            },
+          );
+        },
+      );
+      
+    });
+  }
+
   protected acquireTokens = (idToken: string) => {
     this.UserAgentApplication.acquireTokenSilent(this.authParameters).then(
       (response: AuthResponse) => {

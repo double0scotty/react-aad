@@ -24,10 +24,11 @@
 //
 
 import { AnyAction } from 'redux';
-import { IAccountInfo } from './Interfaces';
+import { IAccountInfo, IAuthProvider } from './Interfaces';
 
 export const AAD_LOGIN_SUCCESS: string = 'AAD_LOGIN_SUCCESS';
 export const AAD_LOGOUT_SUCCESS: string = 'AAD_LOGOUT_SUCCESS';
+export const AAD_PROVIDER_CREATED: string = 'AAD_PROVIDER_CREATED';
 
 export const loginSuccessful = (data: IAccountInfo): AnyAction => {
 	return {
@@ -39,5 +40,12 @@ export const loginSuccessful = (data: IAccountInfo): AnyAction => {
 export const logoutSuccessful = (): AnyAction => {
 	return {
 		type: AAD_LOGOUT_SUCCESS
+	}
+}
+
+export const providerCreated = (data: IAuthProvider): AnyAction => {
+	return {
+		payload: data,
+		type: AAD_PROVIDER_CREATED
 	}
 }
