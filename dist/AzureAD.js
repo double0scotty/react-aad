@@ -86,6 +86,7 @@ var AzureAD = /** @class */ (function(_super) {
     };
     _this.authProvider = _this.props.provider.getAuthProvider();
     _this.authProvider.onAuthenticationStateChanged = _this.updateAuthenticationState;
+    _this.dispatchProviderToProvidedReduxStore(_this.authProvider);
     _this.state = { authenticationState: _this.authProvider.authenticationState };
     if (
       _this.props.forceLogin &&
@@ -118,6 +119,11 @@ var AzureAD = /** @class */ (function(_super) {
   AzureAD.prototype.dispatchToProvidedReduxStore = function(data) {
     if (this.props.reduxStore) {
       this.props.reduxStore.dispatch(actions_1.loginSuccessful(data));
+    }
+  };
+  AzureAD.prototype.dispatchProviderToProvidedReduxStore = function(data) {
+    if (this.props.reduxStore) {
+      this.props.reduxStore.dispatch(actions_1.providerCreated(data));
     }
   };
   return AzureAD;

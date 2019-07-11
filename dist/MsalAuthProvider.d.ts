@@ -11,6 +11,7 @@ export declare abstract class MsalAuthProvider implements IAuthProvider {
     abstract login(): void;
     logout(): void;
     getAccountInfo(): IAccountInfo;
+    getToken(): Promise<string>;
     protected acquireTokens: (idToken: string) => void;
     private checkIfUserAuthenticated;
     private isLoggedIn;

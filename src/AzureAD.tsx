@@ -28,8 +28,6 @@ import { Store } from 'redux';
 
 import { loginSuccessful, logoutSuccessful, providerCreated } from './actions';
 import { AccountInfoCallback, AuthenticationState, IAccountInfo, IAuthProvider, IAuthProviderFactory } from './Interfaces';
-import { MsalAuthProvider } from './MsalAuthProvider';
-
 
 
 type UnauthenticatedFunction = (login: LoginFunction) => JSX.Element;

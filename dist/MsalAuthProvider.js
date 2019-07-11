@@ -118,6 +118,39 @@ var MsalAuthProvider = /** @class */ (function() {
   MsalAuthProvider.prototype.getAccountInfo = function() {
     return this.accountInfo;
   };
+  MsalAuthProvider.prototype.getToken = function() {
+    var _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.UserAgentApplication.acquireTokenSilent(_this.authParameters).then(
+        function(response) {
+          _this.saveAccountInfo(
+            response.accessToken,
+            response.idToken.rawIdToken,
+            _this.UserAgentApplication.getAccount(),
+          );
+          resolve(response.accessToken);
+        },
+        function(tokenSilentError) {
+          _this.setAuthenticationState(Interfaces_1.AuthenticationState.Unauthenticated);
+          logger_1.Logger.error('token silent error; ' + tokenSilentError);
+          _this.UserAgentApplication.acquireTokenPopup(_this.authParameters).then(
+            function(response) {
+              _this.saveAccountInfo(
+                response.accessToken,
+                response.idToken.rawIdToken,
+                _this.UserAgentApplication.getAccount(),
+              );
+              resolve(response.accessToken);
+            },
+            function(tokenPopupError) {
+              _this.setAuthenticationState(Interfaces_1.AuthenticationState.Unauthenticated);
+              logger_1.Logger.error('token popup error; ' + tokenPopupError);
+            },
+          );
+        },
+      );
+    });
+  };
   MsalAuthProvider.prototype.setAuthenticationState = function(state) {
     if (this.authenticationState !== state) {
       this.authenticationState = state;

@@ -25,5 +25,6 @@ declare class AzureAD extends React.Component<IProps, IState> {
     private login;
     private logout;
     private dispatchToProvidedReduxStore;
+    private dispatchProviderToProvidedReduxStore;
 }
 export { AzureAD };

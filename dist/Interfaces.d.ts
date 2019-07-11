@@ -23,4 +23,5 @@ export interface IAuthProvider {
     getAccountInfo(): IAccountInfo;
     login(): void;
     logout(): void;
+    getToken(): Promise<string>;
 }

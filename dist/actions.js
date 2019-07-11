@@ -26,6 +26,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.AAD_LOGIN_SUCCESS = 'AAD_LOGIN_SUCCESS';
 exports.AAD_LOGOUT_SUCCESS = 'AAD_LOGOUT_SUCCESS';
+exports.AAD_PROVIDER_CREATED = 'AAD_PROVIDER_CREATED';
 exports.loginSuccessful = function(data) {
   return {
     payload: data,
@@ -35,6 +36,12 @@ exports.loginSuccessful = function(data) {
 exports.logoutSuccessful = function() {
   return {
     type: exports.AAD_LOGOUT_SUCCESS,
+  };
+};
+exports.providerCreated = function(data) {
+  return {
+    payload: data,
+    type: exports.AAD_PROVIDER_CREATED,
   };
 };
 //# sourceMappingURL=actions.js.map
